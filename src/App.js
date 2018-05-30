@@ -48,7 +48,7 @@ class App extends Component {
           <AppBar position="static" color="primary">
               <Toolbar>
                   <Typography variant="title" color="inherit">
-                      MK Developer Challenge
+                      MK Developer Challenge - Westin Curtis
                   </Typography>
               </Toolbar>
           </AppBar>
