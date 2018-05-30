@@ -3,6 +3,8 @@ import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 class App extends Component {
     constructor(props) {
@@ -43,6 +45,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+          <AppBar position="static" color="primary">
+              <Toolbar>
+                  <Typography variant="title" color="inherit">
+                      MK Developer Challenge
+                  </Typography>
+              </Toolbar>
+          </AppBar>
+          <div className="Container">
         <form onSubmit={this.handleSubmit}  method="post">
         <TextField id="fullName" name="fullName" label="Name" placeholder="Full Name" autoComplete="name" fullWidth margin="normal" required value={this.state.fullName}  onChange={this.handleChange}/>
           <TextField id="email" name="email" label="Email" placeholder="Email Address" autoComplete="email" fullWidth type="email" margin="normal" required value={this.state.email}  onChange={this.handleChange}/>
@@ -50,6 +60,7 @@ class App extends Component {
           <Button variant="raised" color="primary" fullWidth type="submit">Submit</Button>
         </form>
           <Typography variant="headline" margin="normal">{this.state.responseMessage}</Typography>
+          </div>
       </div>
     );
   }
