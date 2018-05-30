@@ -37,7 +37,6 @@ class App extends Component {
           <TextField id="email" name="email" label="Email" placeholder="Email Address" fullWidth type="email" margin="normal" required  onChange={this.handleChange}/>
           <TextField id="message" name="message" label="Message" multiline rows="6" fullWidth placeholder="Enter your message." margin="normal" required onChange={this.handleChange}/>
           <Button variant="raised" color="primary" fullWidth type="submit">Submit</Button>
-            <Typography>{this.state.responseMessage}</Typography>
         </form>
       </div>
     );
