@@ -49,7 +49,7 @@ class App extends Component {
           <TextField id="message" name="message" label="Message" multiline rows="6" fullWidth placeholder="Enter your message." margin="normal" required value={this.state.message} onChange={this.handleChange}/>
           <Button variant="raised" color="primary" fullWidth type="submit">Submit</Button>
         </form>
-          <Typography variant="body1" margin="normal">{this.state.responseMessage}</Typography>
+          <Typography variant="headline" margin="normal">{this.state.responseMessage}</Typography>
       </div>
     );
   }
