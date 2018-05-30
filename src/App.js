@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {fullName: '', email: '', message: '', responseMessage: ''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,15 +16,25 @@ class App extends Component {
     handleSubmit(event){
         event.preventDefault();
 
-        const data = {name: this.state.fullName, email: this.state.email, subject: "MK Developer Challenge", message: this.state.message, 'Content-Type': 'application/json'};
-        fetch("https://len332mac1.execute-api.us-east-1.amazonaws.com/Testing/emails", {method: "post", body: JSON.stringify(data)}).then(function (response) {
-            console.log("successfully sent the email");
-        }).catch( function (err) {
-            console.log("Whoops! Something happened.")
+        // Build the data to send to the Amazon gateway API.
+        const data = {name: this.state.fullName, email: this.state.email, subject: "MK Developer Challenge", message: this.state.message};
+        const headers = {'Content-Type': 'application/json'};
+        fetch("https://len332mac1.execute-api.us-east-1.amazonaws.com/Testing/emails", {method: "post", body: JSON.stringify(data), headers: headers}).then(function (response) {
+            if(response.ok){
+                // Only clear inputs if the response was ok.
+                this.setState({fullName: '', email: '', message: '', responseMessage: 'Successfully sent email. Thank you!'});
+            }
+            else{
+                this.setState({responseMessage: 'Error occurred while processing your request. Please try again later.'});
+            }
+
+        }.bind(this)).catch( function (err) {
+            this.setState({responseMessage: 'Error occurred while processing your request. Please try again later.'});
         });
 
     }
 
+    // Update state when a change is detected.
     handleChange(event){
         const name = event.target.name;
         this.setState({[name]: event.target.value});
@@ -33,11 +44,12 @@ class App extends Component {
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}  method="post">
-        <TextField id="fullName" name="fullName" label="Name" placeholder="Full Name" fullWidth margin="normal" required  onChange={this.handleChange}/>
-          <TextField id="email" name="email" label="Email" placeholder="Email Address" fullWidth type="email" margin="normal" required  onChange={this.handleChange}/>
-          <TextField id="message" name="message" label="Message" multiline rows="6" fullWidth placeholder="Enter your message." margin="normal" required onChange={this.handleChange}/>
+        <TextField id="fullName" name="fullName" label="Name" placeholder="Full Name" autoComplete="name" fullWidth margin="normal" required value={this.state.fullName}  onChange={this.handleChange}/>
+          <TextField id="email" name="email" label="Email" placeholder="Email Address" autoComplete="email" fullWidth type="email" margin="normal" required value={this.state.email}  onChange={this.handleChange}/>
+          <TextField id="message" name="message" label="Message" multiline rows="6" fullWidth placeholder="Enter your message." margin="normal" required value={this.state.message} onChange={this.handleChange}/>
           <Button variant="raised" color="primary" fullWidth type="submit">Submit</Button>
         </form>
+          <Typography variant="body1" margin="normal">{this.state.responseMessage}</Typography>
       </div>
     );
   }
